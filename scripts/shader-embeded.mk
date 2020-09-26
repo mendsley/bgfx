@@ -36,6 +36,8 @@ vs_%.bin.h : vs_%.sc
 	-@cat $(SHADER_TMP) >> $(@)
 	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
 	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_nvn;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_nvn_size;>> $(@)
 
 fs_%.bin.h : fs_%.sc
 	@echo [$(<)]
@@ -51,6 +53,8 @@ fs_%.bin.h : fs_%.sc
 	-@cat $(SHADER_TMP) >> $(@)
 	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
 	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_nvn;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_nvn_size;>> $(@)
 
 cs_%.bin.h : cs_%.sc
 	@echo [$(<)]
@@ -62,6 +66,8 @@ cs_%.bin.h : cs_%.sc
 	-@cat $(SHADER_TMP) >> $(@)
 	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
 	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_nvn;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_nvn_size;>> $(@)
 
 .PHONY: all
 all: $(BIN)

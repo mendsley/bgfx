@@ -37,6 +37,8 @@ define shader-embedded
 	-@cat $(SHADER_TMP) >> $(@)
 	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
 	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_nvn;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_nvn_size;>> $(@)
 endef
 
 vs_debugfont.bin.h : vs_debugfont.sc

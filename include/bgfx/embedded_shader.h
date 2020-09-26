@@ -101,6 +101,12 @@
 		{ _renderer, BX_CONCATENATE(_name, _mtl), BX_COUNTOF(BX_CONCATENATE(_name, _mtl) ) },
 #endif // BGFX_PLATFORM_SUPPORTS_METAL
 
+#if BGFX_PLATFORM_SUPPORTS_NVN
+#	undef  BGFX_EMBEDDED_SHADER_NVN
+#	define BGFX_EMBEDDED_SHADER_NVN(_renderer, _name) \
+		{ _renderer, BX_CONCATENATE(_name, _nvn), BX_CONCATENATE(_name, _nvn_size) },
+#endif // BGFX_PLATFORM_SUPPORTS_NVN
+
 #define BGFX_EMBEDDED_SHADER(_name)                                                                \
 			{                                                                                      \
 				#_name,                                                                            \

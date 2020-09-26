@@ -23,6 +23,7 @@ all:
 	@echo "  TARGET=5 (metal)"
 	@echo "  TARGET=6 (pssl)"
 	@echo "  TARGET=7 (spirv)"
+	@echo "  TARGET=8 (nvn)"
 
 .PHONY: rebuild
 rebuild:
@@ -83,6 +84,13 @@ VS_FLAGS=--platform linux -p spirv
 FS_FLAGS=--platform linux -p spirv
 CS_FLAGS=--platform linux -p spirv
 SHADER_PATH=shaders/spirv
+else
+ifeq ($(TARGET), 7)
+VS_FLAGS=--platform nx -p nvn
+FS_FLAGS=--platform nx -p nvn
+CS_FLAGS=--platform nx -p nvn
+SHADER_PATH=shaders/spirv
+endif
 endif
 endif
 endif

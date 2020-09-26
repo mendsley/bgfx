@@ -884,6 +884,7 @@ namespace bgfx
 			  "           asm.js\n"
 			  "           ios\n"
 			  "           linux\n"
+			  "           switch\n"
 			  "           orbis\n"
 			  "           osx\n"
 			  "           windows\n"
@@ -893,6 +894,7 @@ namespace bgfx
 				"           s_4_0_level\n"
 				"           s_5\n"
 				"           metal\n"
+				"           nvn\n"
 				"           pssl\n"
 				"           spirv\n"
 			  "      --preprocess              Preprocess only.\n"
@@ -932,6 +934,7 @@ namespace bgfx
 		uint32_t metal = 0;
 		uint32_t pssl  = 0;
 		uint32_t spirv = 0;
+		uint32_t nvn = 0;
 		const char* profile = _options.profile.c_str();
 		if ('\0' != profile[0])
 		{
@@ -963,6 +966,10 @@ namespace bgfx
 			else if (0 == bx::strCmp(profile, "spirv") )
 			{
 				spirv = 1;
+			}
+			else if (0 == bx::strCmp(profile, "nvn") )
+			{
+				nvn = 1;
 			}
 			else
 			{
@@ -1006,6 +1013,7 @@ namespace bgfx
 		preprocessor.setDefaultDefine("BGFX_SHADER_LANGUAGE_METAL");
 		preprocessor.setDefaultDefine("BGFX_SHADER_LANGUAGE_PSSL");
 		preprocessor.setDefaultDefine("BGFX_SHADER_LANGUAGE_SPIRV");
+		preprocessor.setDefaultDefine("BGFX_SHADER_LANGUAGE_NVN");
 
 		preprocessor.setDefaultDefine("BGFX_SHADER_TYPE_COMPUTE");
 		preprocessor.setDefaultDefine("BGFX_SHADER_TYPE_FRAGMENT");
@@ -1076,6 +1084,11 @@ namespace bgfx
 			preprocessor.setDefine("BX_PLATFORM_PS4=1");
 			preprocessor.setDefine("BGFX_SHADER_LANGUAGE_PSSL=1");
 			preprocessor.setDefine("lit=lit_reserved");
+		}
+		else if (0 == bx::strCmpI(platform, "switch") )
+		{
+			preprocessor.setDefine("BX_PLATFORM_SWITCH=1");
+			preprocessor.setDefine("BFX_SHADER_LANGUAGE_NVN=1");
 		}
 
 		preprocessor.setDefine("M_PI=3.1415926535897932384626433832795");
@@ -1331,6 +1344,10 @@ namespace bgfx
 			{
 				compiled = compilePSSLShader(_options, 0, input, _writer);
 			}
+			else if (0 != nvn)
+			{
+				compiled = compileNvnShader(_options, 0, input, _writer);
+			}
 			else
 			{
 				compiled = compileHLSLShader(_options, d3d, input, _writer);
@@ -1354,6 +1371,10 @@ namespace bgfx
 					if (0 != pssl)
 					{
 						preprocessor.writef(getPsslPreamble() );
+					}
+					else if (0 != nvn)
+					{
+						preprocessor.writef(getNvnPreamble() );
 					}
 
 					preprocessor.writef(
@@ -1486,6 +1507,10 @@ namespace bgfx
 							{
 								compiled = compilePSSLShader(_options, 0, code, _writer);
 							}
+							else if (0 != nvn)
+							{
+								compiled = compileNvnShader(_options, 0, code, _writer);
+							}
 							else
 							{
 								compiled = compileHLSLShader(_options, d3d, code, _writer);
@@ -1584,6 +1609,10 @@ namespace bgfx
 					if (0 != pssl)
 					{
 						preprocessor.writef(getPsslPreamble() );
+					}
+					else if (0 != nvn)
+					{
+						preprocessor.writef(getNvnPreamble() );
 					}
 
 					preprocessor.writef(
@@ -2283,6 +2312,10 @@ namespace bgfx
 							else if (0 != pssl)
 							{
 								compiled = compilePSSLShader(_options, 0, code, _writer);
+							}
+							else if (0 != nvn)
+							{
+								compiled = compileNvnShader(_options, 0, code, _writer);
 							}
 							else
 							{
