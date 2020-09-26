@@ -104,7 +104,6 @@
 					|| BX_PLATFORM_ANDROID    \
 					|| BX_PLATFORM_LINUX      \
 					|| BX_PLATFORM_WINDOWS    \
-					|| BX_PLATFORM_NX         \
 					|| BX_PLATFORM_OSX        \
 					? 1 : 0)
 #	endif // BGFX_CONFIG_RENDERER_VULKAN
